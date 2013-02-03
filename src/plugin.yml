@@ -1,0 +1,10 @@
+name: HeadDrops
+version: 1.4
+author: pizzafreak08
+main: me.pizzafreak08.HeadDrops.HeadDrops
+website: http://www.timolia.de/
+description: Make hostile Mobs and Players drop their Heads!
+commands:
+    head:
+        description: Gives you or someone else the head of a specific Player
+        usage: /head [player] <name of head>
