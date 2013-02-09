@@ -10,7 +10,6 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
@@ -79,14 +78,19 @@ public class EventListener implements Listener {
 			if (cause == DamageCause.ENTITY_ATTACK && killer != null) {
 				if (plugin.getConfig().getBoolean("ironanddiamond")) {
 					if (killer.getItemInHand().getType() == Material.IRON_SWORD || killer.getItemInHand().getType() == Material.DIAMOND_SWORD || (plugin.getConfig().getBoolean("axeenabled") && (killer.getItemInHand().getType() == Material.IRON_AXE || killer.getItemInHand().getType() == Material.DIAMOND_AXE))) {
-						ItemStack drop = HeadDrops.setSkin(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), dead.getName());
-						dead.getWorld().dropItemNaturally(dead.getLocation(), drop);
+						ItemStack drop = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+						if (!plugin.getConfig().getBoolean("dropBlank"))
+							drop = HeadDrops.setSkin(drop, dead.getName());
+
+						event.getDrops().add(drop);
 					}
 
 				} else {
-					ItemStack drop = HeadDrops.setSkin(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), dead.getName());
-					Item item = dead.getWorld().dropItemNaturally(dead.getLocation(), drop);
-					item.setItemStack(drop);
+					ItemStack drop = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+					if (!plugin.getConfig().getBoolean("dropBlank"))
+						drop = HeadDrops.setSkin(drop, dead.getName());
+
+					event.getDrops().add(drop);
 				}
 			}
 		}
@@ -95,4 +99,5 @@ public class EventListener implements Listener {
 	private void dropSkull(Location loc, int type) {
 		loc.getWorld().dropItemNaturally(loc, new ItemStack(Material.SKULL_ITEM, 1, (byte) type));
 	}
+
 }

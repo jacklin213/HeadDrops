@@ -7,6 +7,7 @@ package de.dariusmewes.HeadDrops;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -22,19 +23,22 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
-		getConfig().addDefault("hostile", 5);
-		getConfig().addDefault("player", 25);
-		getConfig().addDefault("ironanddiamond", true);
-		getConfig().addDefault("axeenabled", true);
-		getConfig().addDefault("zombiedrop", true);
-		getConfig().addDefault("skeletondrop", true);
-		getConfig().addDefault("creeperdrop", true);
-		getConfig().addDefault("playerdrop", true);
-		getConfig().addDefault("checkForUpdates", true);
-		getConfig().options().copyDefaults(true);
+		FileConfiguration conf = getConfig();
+		
+		conf.addDefault("hostile", 5);
+		conf.addDefault("player", 25);
+		conf.addDefault("ironanddiamond", true);
+		conf.addDefault("axeenabled", true);
+		conf.addDefault("zombiedrop", true);
+		conf.addDefault("skeletondrop", true);
+		conf.addDefault("creeperdrop", true);
+		conf.addDefault("playerdrop", true);
+		conf.addDefault("dropBlank", false);
+		conf.addDefault("checkForUpdates", true);
+		conf.options().copyDefaults(true);
 		saveConfig();
 
-		if (getConfig().getBoolean("checkForUpdates"))
+		if (conf.getBoolean("checkForUpdates"))
 			UpdateChecker.start(this);
 	}
 

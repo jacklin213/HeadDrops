@@ -34,6 +34,7 @@ public class HeadCmd implements CommandExecutor {
 
 			p.getInventory().addItem(HeadDrops.setSkin(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), args[0]));
 			p.sendMessage(prefix + "You got one head of " + args[0]);
+			
 		} else if (args.length == 2) {
 			if (!sender.hasPermission("headdrops.other")) {
 				sender.sendMessage(prefix + "You don't have permission!");
