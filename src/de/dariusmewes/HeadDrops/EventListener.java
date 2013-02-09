@@ -3,7 +3,7 @@
  *  2013 Darius Mewes
  */
 
-package me.pizzafreak08.HeadDrops;
+package de.dariusmewes.HeadDrops;
 
 import java.util.Random;
 
