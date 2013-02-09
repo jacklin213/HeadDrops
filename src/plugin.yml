@@ -1,7 +1,7 @@
 name: HeadDrops
 version: 1.4
 author: pizzafreak08
-main: me.pizzafreak08.HeadDrops.HeadDrops
+main: de.dariusmewes.HeadDrops.HeadDrops
 website: http://www.timolia.de/
 description: Make hostile Mobs and Players drop their Heads!
 commands:
