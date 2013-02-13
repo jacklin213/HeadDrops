@@ -13,13 +13,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.dariusmewes.HeadDrops.commands.head;
+import de.dariusmewes.HeadDrops.commands.headinfo;
+
 public class HeadDrops extends JavaPlugin implements Listener {
 
 	public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
 	public static boolean updateAvailable = false;
 
 	public void onEnable() {
-		getCommand("head").setExecutor(new HeadCmd());
+		getCommand("head").setExecutor(new head());
+		getCommand("headinfo").setExecutor(new headinfo());
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 

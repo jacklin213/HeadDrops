@@ -3,7 +3,7 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops;
+package de.dariusmewes.HeadDrops.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,7 +13,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class HeadCmd implements CommandExecutor {
+import de.dariusmewes.HeadDrops.HeadDrops;
+
+public class head implements CommandExecutor {
 
 	private String prefix = HeadDrops.PREFIX;
 
@@ -57,4 +59,5 @@ public class HeadCmd implements CommandExecutor {
 
 		return true;
 	}
+	
 }

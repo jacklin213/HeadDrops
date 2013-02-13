@@ -96,6 +96,17 @@ public class EventListener implements Listener {
 		}
 	}
 
+	// @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	// public void onBlockDamage(BlockDamageEvent event) {
+	// Bukkit.broadcastMessage("test" + event.getBlock().getData());
+	// if (event.getBlock().getType() == Material.SKULL && event.getBlock().get
+	// == 3 && headinfo.enabled.contains(event.getPlayer().getName())) {
+	// event.getPlayer().sendMessage(HeadDrops.PREFIX + "Name: " + ((Skull)
+	// event.getBlock()).getOwner());
+	// event.setCancelled(true);
+	// }
+	// }
+
 	private void dropSkull(Location loc, int type) {
 		loc.getWorld().dropItemNaturally(loc, new ItemStack(Material.SKULL_ITEM, 1, (byte) type));
 	}
