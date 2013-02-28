@@ -24,11 +24,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class EventListener implements Listener {
 
-	private HeadDrops plugin;
+	private HeadDrops instance;
 	private Random rand = new Random();
 
-	public EventListener(HeadDrops plugin) {
-		this.plugin = plugin;
+	public EventListener(HeadDrops instance) {
+		this.instance = instance;
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -41,23 +41,25 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (rand.nextInt(100) < plugin.getConfig().getInt("hostile")) {
-			if (event.getEntity().getLastDamageCause() == null) {
+		if (rand.nextInt(100) < instance.getConfig().getInt("hostile")) {
+			if (event.getEntity().getLastDamageCause() == null)
 				return;
-			}
 
 			EntityType t = event.getEntity().getType();
 			DamageCause cause = event.getEntity().getLastDamageCause().getCause();
 
 			if (cause == DamageCause.ENTITY_ATTACK && event.getEntity().getKiller() != null) {
+				if (instance.getConfig().getBoolean("permissionCheckMob") && !event.getEntity().getKiller().hasPermission("headdrops.mobhead"))
+					return;
+
 				Location loc = event.getEntity().getLocation();
 
-				if (t == EntityType.ZOMBIE && plugin.getConfig().getBoolean("zombiedrop")) {
+				if (t == EntityType.ZOMBIE && instance.getConfig().getBoolean("zombiedrop")) {
 					dropSkull(loc, 2);
-				} else if (t == EntityType.SKELETON && plugin.getConfig().getBoolean("skeletondrop")) {
+				} else if (t == EntityType.SKELETON && instance.getConfig().getBoolean("skeletondrop")) {
 					if (((Skeleton) event.getEntity()).getSkeletonType() == SkeletonType.NORMAL)
 						dropSkull(loc, 0);
-				} else if (t == EntityType.CREEPER && plugin.getConfig().getBoolean("creeperdrop")) {
+				} else if (t == EntityType.CREEPER && instance.getConfig().getBoolean("creeperdrop")) {
 					dropSkull(loc, 4);
 				}
 			}
@@ -66,28 +68,29 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		if (rand.nextInt(100) < plugin.getConfig().getInt("player") && plugin.getConfig().getBoolean("playerdrop")) {
-			if (event.getEntity().getLastDamageCause() == null) {
+		if (rand.nextInt(100) < instance.getConfig().getInt("player") && instance.getConfig().getBoolean("playerdrop")) {
+			if (event.getEntity().getLastDamageCause() == null)
 				return;
-			}
 
 			Player dead = event.getEntity();
 			Player killer = event.getEntity().getKiller();
 			DamageCause cause = event.getEntity().getLastDamageCause().getCause();
 
 			if (cause == DamageCause.ENTITY_ATTACK && killer != null) {
-				if (plugin.getConfig().getBoolean("ironanddiamond")) {
-					if (killer.getItemInHand().getType() == Material.IRON_SWORD || killer.getItemInHand().getType() == Material.DIAMOND_SWORD || (plugin.getConfig().getBoolean("axeenabled") && (killer.getItemInHand().getType() == Material.IRON_AXE || killer.getItemInHand().getType() == Material.DIAMOND_AXE))) {
+				if (instance.getConfig().getBoolean("permissionCheckPlayer") && !event.getEntity().getKiller().hasPermission("headdrops.playerhead"))
+					return;
+
+				if (instance.getConfig().getBoolean("ironanddiamond")) {
+					if (killer.getItemInHand().getType() == Material.IRON_SWORD || killer.getItemInHand().getType() == Material.DIAMOND_SWORD || (instance.getConfig().getBoolean("axeenabled") && (killer.getItemInHand().getType() == Material.IRON_AXE || killer.getItemInHand().getType() == Material.DIAMOND_AXE))) {
 						ItemStack drop = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-						if (!plugin.getConfig().getBoolean("dropBlank"))
+						if (!instance.getConfig().getBoolean("dropBlank"))
 							drop = HeadDrops.setSkin(drop, dead.getName());
 
 						event.getDrops().add(drop);
 					}
-
 				} else {
 					ItemStack drop = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-					if (!plugin.getConfig().getBoolean("dropBlank"))
+					if (!instance.getConfig().getBoolean("dropBlank"))
 						drop = HeadDrops.setSkin(drop, dead.getName());
 
 					event.getDrops().add(drop);
@@ -95,17 +98,6 @@ public class EventListener implements Listener {
 			}
 		}
 	}
-
-	// @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-	// public void onBlockDamage(BlockDamageEvent event) {
-	// Bukkit.broadcastMessage("test" + event.getBlock().getData());
-	// if (event.getBlock().getType() == Material.SKULL && event.getBlock().get
-	// == 3 && headinfo.enabled.contains(event.getPlayer().getName())) {
-	// event.getPlayer().sendMessage(HeadDrops.PREFIX + "Name: " + ((Skull)
-	// event.getBlock()).getOwner());
-	// event.setCancelled(true);
-	// }
-	// }
 
 	private void dropSkull(Location loc, int type) {
 		loc.getWorld().dropItemNaturally(loc, new ItemStack(Material.SKULL_ITEM, 1, (byte) type));

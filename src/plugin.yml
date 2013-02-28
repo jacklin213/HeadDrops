@@ -8,6 +8,3 @@ commands:
     head:
         description: Gives you or someone else the head of a specific Player
         usage: /head [player] <name of head>
-    headinfo:
-        description: Shows the Heads name in chat upon punching it
-        usage: /headinfo

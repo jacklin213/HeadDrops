@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.dariusmewes.HeadDrops.commands.head;
-import de.dariusmewes.HeadDrops.commands.headinfo;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
@@ -23,12 +22,11 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		getCommand("head").setExecutor(new head());
-		getCommand("headinfo").setExecutor(new headinfo());
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
 		FileConfiguration conf = getConfig();
-		
+
 		conf.addDefault("hostile", 5);
 		conf.addDefault("player", 25);
 		conf.addDefault("ironanddiamond", true);
@@ -38,6 +36,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		conf.addDefault("creeperdrop", true);
 		conf.addDefault("playerdrop", true);
 		conf.addDefault("dropBlank", false);
+		conf.addDefault("permissionCheckMob", false);
+		conf.addDefault("permissionCheckPlayer", false);
 		conf.addDefault("checkForUpdates", true);
 		conf.options().copyDefaults(true);
 		saveConfig();
@@ -56,4 +56,5 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		item.setItemMeta(meta);
 		return item;
 	}
+
 }
