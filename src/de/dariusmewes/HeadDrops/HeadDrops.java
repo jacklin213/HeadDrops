@@ -5,6 +5,8 @@
 
 package de.dariusmewes.HeadDrops;
 
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.dariusmewes.HeadDrops.commands.head;
+import de.dariusmewes.HeadDrops.commands.headdrops;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
@@ -22,6 +25,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		getCommand("head").setExecutor(new head());
+		getCommand("headdrops").setExecutor(new headdrops(this));
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
@@ -44,10 +48,26 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 		if (conf.getBoolean("checkForUpdates"))
 			UpdateChecker.start(this);
+		else
+			log("Update-Checking disabled! Change the config.yml to activate it.");
 	}
 
 	public void onDisable() {
 
+	}
+
+	public void reload() {
+		this.reloadConfig();
+		if (!getConfig().getBoolean("checkForUpdates") && UpdateChecker.task != null) {
+			UpdateChecker.task.cancel();
+			UpdateChecker.task = null;
+			log("UpdateChecker stopped");
+		} else if (getConfig().getBoolean("checkForUpdates") && UpdateChecker.task == null)
+			UpdateChecker.start(this);
+	}
+
+	public static void log(String tx) {
+		Logger.getLogger("Minecraft").info("[HeadDrops] " + tx);
 	}
 
 	public static ItemStack setSkin(ItemStack item, String nick) {

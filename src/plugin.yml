@@ -8,3 +8,6 @@ commands:
     head:
         description: Gives you or someone else the head of a specific Player
         usage: /head [player] <name of head>
+    headdrops:
+        description: Reload or Update the plugin
+        usage: /headdrops <reload/check/update>

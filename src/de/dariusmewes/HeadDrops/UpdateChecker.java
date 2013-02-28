@@ -17,6 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,12 +25,14 @@ import org.w3c.dom.NodeList;
 
 public class UpdateChecker {
 
-	private static String XMLURL = "https://dl.dropbox.com/u/56892130/TPL/TManager.xml";
+	public static BukkitTask task;
+	private static String XMLURL = "https://dl.dropbox.com/u/56892130/TPL/TManager2.xml";
 	private static PluginDescriptionFile pdf;
 
 	public static void start(JavaPlugin instance) {
 		pdf = instance.getDescription();
-		Bukkit.getScheduler().runTaskTimer(instance, new Runnable() {
+		HeadDrops.log("UpdateChecker started");
+		task = Bukkit.getScheduler().runTaskTimer(instance, new Runnable() {
 			public void run() {
 				if (check()) {
 					Logger.getLogger("Minecraft").info("(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/head-drops");
