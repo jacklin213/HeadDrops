@@ -5,28 +5,25 @@
 
 package de.dariusmewes.HeadDrops;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class UpdateChecker {
 
 	public static BukkitTask task;
-	private static String XMLURL = "https://dl.dropbox.com/u/56892130/TPL/TManager2.xml";
+	private static final String XMLURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
 	private static PluginDescriptionFile pdf;
 
 	public static void start(JavaPlugin instance) {
@@ -43,72 +40,39 @@ public class UpdateChecker {
 	}
 
 	public static boolean check() {
+		URL url;
 		try {
-			File xml = new File("plugins" + File.separator + pdf.getName() + File.separator + "temp.xml");
-			if (xml.exists())
-				xml.delete();
-
-			xml.createNewFile();
-
-			BufferedInputStream input = new BufferedInputStream(new URL(XMLURL).openStream());
-			BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(xml));
-			byte[] buffer = new byte[1024];
-			int i = 0;
-
-			while ((i = input.read(buffer, 0, 1024)) >= 0) {
-				output.write(buffer, 0, i);
-			}
-
-			input.close();
-			output.close();
-
-			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml);
-			doc.getDocumentElement().normalize();
-
-			NodeList nList = doc.getElementsByTagName("plugin");
-
-			String name = "";
-			String version = "";
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-				Node nNode = nList.item(temp);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-					Element eElement = (Element) nNode;
-
-					name = getTagValue("name", eElement);
-
-					if (name.equalsIgnoreCase(pdf.getName())) {
-						version = getTagValue("version", eElement);
-						break;
-					}
-				}
-			}
-
-			xml.delete();
-			double v;
-			double installedV;
-
-			try {
-				v = Double.valueOf(version);
-				installedV = Double.valueOf(pdf.getVersion());
-			} catch (Exception e) {
-				return false;
-			}
-
-			if (v > installedV) {
-				return true;
-			}
-		} catch (Exception e) {
-
+			url = new URL(XMLURL);
+		} catch (MalformedURLException e) {
+			return false;
 		}
-		return false;
+
+		Map<String, String> data = new HashMap<String, String>();
+		try {
+			InputStream in = url.openStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in));
+			String line;
+			while ((line = read.readLine()) != null) {
+				String[] lineData = line.split(" ");
+				data.put(lineData[0], lineData[1]);
+			}
+		} catch (IOException e) {
+			return false;
+		}
+
+		String vS = data.get(pdf.getName());
+		double v, currentV;
+		try {
+			v = Double.valueOf(vS);
+			currentV = Double.valueOf(pdf.getVersion());
+		} catch (NumberFormatException e) {
+			return false;
+		}
+
+		if (v > currentV)
+			return true;
+		else
+			return false;
 	}
 
-	private static String getTagValue(String sTag, Element eElement) {
-		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
-
-		Node nValue = (Node) nlList.item(0);
-
-		return nValue.getNodeValue();
-	}
 }
