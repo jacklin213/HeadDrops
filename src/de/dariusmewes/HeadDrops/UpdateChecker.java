@@ -23,7 +23,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class UpdateChecker {
 
 	public static BukkitTask task;
-	private static final String XMLURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
+	public static final String VURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
 	private static PluginDescriptionFile pdf;
 
 	public static void start(JavaPlugin instance) {
@@ -42,7 +42,7 @@ public class UpdateChecker {
 	public static boolean check() {
 		URL url;
 		try {
-			url = new URL(XMLURL);
+			url = new URL(VURL);
 		} catch (MalformedURLException e) {
 			return false;
 		}

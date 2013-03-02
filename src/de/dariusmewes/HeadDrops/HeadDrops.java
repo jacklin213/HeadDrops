@@ -5,6 +5,7 @@
 
 package de.dariusmewes.HeadDrops;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -21,6 +22,7 @@ import de.dariusmewes.HeadDrops.commands.headdrops;
 public class HeadDrops extends JavaPlugin implements Listener {
 
 	public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
+	public static File dataFolder;
 	public static boolean updateAvailable = false;
 
 	public void onEnable() {
@@ -28,6 +30,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		getCommand("headdrops").setExecutor(new headdrops(this));
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
+
+		dataFolder = getDataFolder();
 
 		FileConfiguration conf = getConfig();
 
