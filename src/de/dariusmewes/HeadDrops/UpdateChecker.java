@@ -13,7 +13,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -23,18 +22,19 @@ import org.bukkit.scheduler.BukkitTask;
 public class UpdateChecker {
 
 	public static BukkitTask task;
-	public static final String VURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
+	private static final String VURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
 	private static PluginDescriptionFile pdf;
+	private static final String infoMsg = "(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/head-drops or type /headdrops update";
 
 	public static void start(JavaPlugin instance) {
 		pdf = instance.getDescription();
 		HeadDrops.log("UpdateChecker started");
 		task = Bukkit.getScheduler().runTaskTimer(instance, new Runnable() {
 			public void run() {
-				if (check()) {
-					Logger.getLogger("Minecraft").info("(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/head-drops");
-					HeadDrops.updateAvailable = true;
-				}
+				if (HeadDrops.updateAvailable)
+					HeadDrops.log(infoMsg);
+				else
+					check();
 			}
 		}, 200L, 144000L);
 	}
@@ -69,9 +69,11 @@ public class UpdateChecker {
 			return false;
 		}
 
-		if (v > currentV)
+		if (v > currentV) {
+			HeadDrops.log(infoMsg);
+			HeadDrops.updateAvailable = true;
 			return true;
-		else
+		} else
 			return false;
 	}
 

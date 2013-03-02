@@ -57,7 +57,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
 	}
 
 	public void onDisable() {
-
+		
 	}
 
 	public void reload() {
