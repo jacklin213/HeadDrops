@@ -17,7 +17,7 @@ import de.dariusmewes.HeadDrops.HeadDrops;
 
 public class head implements CommandExecutor {
 
-	private String prefix = HeadDrops.PREFIX;
+	private static final String prefix = HeadDrops.PREFIX;
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 

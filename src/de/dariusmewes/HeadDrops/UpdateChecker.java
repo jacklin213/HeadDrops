@@ -24,7 +24,7 @@ public class UpdateChecker {
 	public static BukkitTask task;
 	private static final String VURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
 	private static PluginDescriptionFile pdf;
-	private static final String infoMsg = "(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/head-drops or type /headdrops update";
+	private static final String infoMsg = "(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/head-drops";
 
 	public static void start(JavaPlugin instance) {
 		pdf = instance.getDescription();

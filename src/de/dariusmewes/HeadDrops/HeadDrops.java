@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.dariusmewes.HeadDrops.commands.head;
-import de.dariusmewes.HeadDrops.commands.headdrops;
+import de.dariusmewes.HeadDrops.commands.myhead;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
@@ -27,7 +27,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		getCommand("head").setExecutor(new head());
-		getCommand("headdrops").setExecutor(new headdrops(this));
+		// getCommand("headdrops").setExecutor(new headdrops(this));
+		getCommand("myhead").setExecutor(new myhead());
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
@@ -57,7 +58,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
 	}
 
 	public void onDisable() {
-		
+
 	}
 
 	public void reload() {

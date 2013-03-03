@@ -22,7 +22,7 @@ import de.dariusmewes.HeadDrops.UpdateChecker;
 public class headdrops implements CommandExecutor {
 
 	private HeadDrops instance;
-	private String prefix = HeadDrops.PREFIX;
+	private static final String prefix = HeadDrops.PREFIX;
 	private static final String VURL = "https://dl.dropbox.com/u/56892130/TPL/HeadDrops.jar";
 
 	public headdrops(HeadDrops instance) {
