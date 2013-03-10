@@ -5,76 +5,77 @@
 
 package de.dariusmewes.HeadDrops;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-public class UpdateChecker {
+public final class UpdateChecker {
 
-	public static BukkitTask task;
-	private static final String VURL = "https://dl.dropbox.com/u/56892130/TPL/Versions.txt";
+	private static final String name = "head-drops";
+	private static final String infoMsg = "(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/" + name;
 	private static PluginDescriptionFile pdf;
-	private static final String infoMsg = "(HeadDrops) A new version is available! Get it at: http://dev.bukkit.org/server-mods/head-drops";
+	public static BukkitTask task;
 
-	public static void start(JavaPlugin instance) {
+	private UpdateChecker() {
+
+	}
+
+	public static void start(final JavaPlugin instance) {
 		pdf = instance.getDescription();
 		HeadDrops.log("UpdateChecker started");
 		task = Bukkit.getScheduler().runTaskTimer(instance, new Runnable() {
 			public void run() {
 				if (HeadDrops.updateAvailable)
 					HeadDrops.log(infoMsg);
-				else
+				else {
 					check();
+					if (HeadDrops.updateAvailable)
+						HeadDrops.log(infoMsg);
+				}
 			}
 		}, 200L, 144000L);
 	}
 
-	public static boolean check() {
-		URL url;
+	public static void check() {
 		try {
-			url = new URL(VURL);
-		} catch (MalformedURLException e) {
-			return false;
-		}
+			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("http://dev.bukkit.org/server-mods/" + name + "/files.rss").openStream());
+			doc.getDocumentElement().normalize();
 
-		Map<String, String> data = new HashMap<String, String>();
-		try {
-			InputStream in = url.openStream();
-			BufferedReader read = new BufferedReader(new InputStreamReader(in));
-			String line;
-			while ((line = read.readLine()) != null) {
-				String[] lineData = line.split(" ");
-				data.put(lineData[0], lineData[1]);
+			NodeList nList = doc.getElementsByTagName("item");
+
+			for (int i = 0; i < nList.getLength(); i++) {
+				Node nNode = nList.item(i);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+					String[] data = getTagValue("title", eElement).split(" ");
+					String name = data[0];
+
+					if (name.equalsIgnoreCase(pdf.getName())) {
+						double v = Double.valueOf(data[2]);
+						double installedV = Double.valueOf(pdf.getVersion());
+						if (v > installedV)
+							HeadDrops.updateAvailable = true;
+					}
+				}
 			}
-		} catch (IOException e) {
-			return false;
-		}
+		} catch (Exception e) {
 
-		String vS = data.get(pdf.getName());
-		double v, currentV;
-		try {
-			v = Double.valueOf(vS);
-			currentV = Double.valueOf(pdf.getVersion());
-		} catch (NumberFormatException e) {
-			return false;
 		}
+	}
 
-		if (v > currentV) {
-			HeadDrops.log(infoMsg);
-			HeadDrops.updateAvailable = true;
-			return true;
-		} else
-			return false;
+	private static String getTagValue(String sTag, Element eElement) {
+		NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+		Node nValue = (Node) nlList.item(0);
+		return nValue.getNodeValue();
 	}
 
 }

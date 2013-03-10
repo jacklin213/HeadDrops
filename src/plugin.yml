@@ -1,5 +1,5 @@
 name: HeadDrops
-version: 1.6
+version: 1.4
 author: pizzafreak08
 main: de.dariusmewes.HeadDrops.HeadDrops
 website: http://www.timolia.de/
@@ -8,6 +8,9 @@ commands:
     head:
         description: Gives you or someone else the head of a specific Player
         usage: /head [player] <name of head>
+    headdrops:
+        description: Reload the plugin config
+        usage: /headdrops <reload>
     myhead:
         description: Gives you your head
         usage: /myhead

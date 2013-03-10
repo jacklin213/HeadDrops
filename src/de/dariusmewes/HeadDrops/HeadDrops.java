@@ -6,6 +6,7 @@
 package de.dariusmewes.HeadDrops;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -17,25 +18,27 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.dariusmewes.HeadDrops.commands.head;
+import de.dariusmewes.HeadDrops.commands.headdrops;
 import de.dariusmewes.HeadDrops.commands.myhead;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
+	private Metrics m;
 	public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
 	public static File dataFolder;
 	public static boolean updateAvailable = false;
 
 	public void onEnable() {
 		getCommand("head").setExecutor(new head());
-		// getCommand("headdrops").setExecutor(new headdrops(this));
+		getCommand("headdrops").setExecutor(new headdrops(this));
 		getCommand("myhead").setExecutor(new myhead());
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
 		dataFolder = getDataFolder();
 
+		// config
 		FileConfiguration conf = getConfig();
-
 		conf.addDefault("hostile", 5);
 		conf.addDefault("player", 25);
 		conf.addDefault("ironanddiamond", true);
@@ -50,6 +53,14 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		conf.addDefault("checkForUpdates", true);
 		conf.options().copyDefaults(true);
 		saveConfig();
+
+		// stats and update checking
+		try {
+			m = new Metrics(this);
+			m.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		if (conf.getBoolean("checkForUpdates"))
 			UpdateChecker.start(this);

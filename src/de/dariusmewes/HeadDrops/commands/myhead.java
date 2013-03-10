@@ -14,17 +14,17 @@ import org.bukkit.inventory.ItemStack;
 
 import de.dariusmewes.HeadDrops.HeadDrops;
 
-public class myhead implements CommandExecutor {
+public final class myhead implements CommandExecutor {
 
 	private static final String prefix = HeadDrops.PREFIX;
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(final CommandSender sender, final Command cmd, final String label, String[] args) {
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(prefix + "This command can only be executed ingame!");
 			return true;
 		}
 
-		Player p = (Player) sender;
+		final Player p = (Player) sender;
 
 		if (!p.hasPermission("headdrops.myhead")) {
 			p.sendMessage(prefix + "You don't have permission!");
