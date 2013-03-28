@@ -32,7 +32,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		getCommand("head").setExecutor(new head());
 		getCommand("headdrops").setExecutor(new headdrops(this));
 		getCommand("myhead").setExecutor(new myhead());
-
+		
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
 		dataFolder = getDataFolder();
