@@ -7,7 +7,7 @@ package de.dariusmewes.HeadDrops;
 
 public enum CustomSkullType {
 
-	BLAZE("_Luna00_", "Blaze Head");
+	BLAZE("_Luna00_", "Blaze Head"), SPIDER("Kelevra_V", "Spider Head"), ENDERMAN("Violit", "Enderman Head");
 
 	private String skin;
 	private String displayName;

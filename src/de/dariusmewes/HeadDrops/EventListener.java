@@ -92,6 +92,10 @@ public class EventListener implements Listener {
 				event.getDrops().add(new ItemStack(Material.SKULL_ITEM, 1, (byte) 4));
 			else if (t == EntityType.BLAZE && chance("blaze"))
 				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.BLAZE));
+			else if (t == EntityType.SPIDER && chance("blaze"))
+				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.SPIDER));
+			else if (t == EntityType.ENDERMAN && chance("enderman"))
+				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.ENDERMAN));
 		}
 	}
 

@@ -45,6 +45,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		conf.addDefault("skeletondrop", 5);
 		conf.addDefault("creeperdrop", 5);
 		conf.addDefault("blazedrop", 5);
+		conf.addDefault("spiderdrop", 5);
+		conf.addDefault("endermandrop", 5);
 		conf.addDefault("playerdrop", 25);
 		conf.addDefault("dropBlank", false);
 		conf.addDefault("permissionCheckMob", false);
