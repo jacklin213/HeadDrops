@@ -14,3 +14,6 @@ commands:
     myhead:
         description: Gives you your head
         usage: /myhead
+    headinfo:
+        description: Get the name of a clicked head displayed
+        usage: /headinfo

@@ -5,14 +5,13 @@
 
 package de.dariusmewes.HeadDrops.commands;
 
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import de.dariusmewes.HeadDrops.HeadDrops;
+import de.dariusmewes.HeadDrops.SkullManager;
 
 public final class myhead implements CommandExecutor {
 
@@ -31,7 +30,7 @@ public final class myhead implements CommandExecutor {
 			return true;
 		}
 
-		p.getInventory().addItem(HeadDrops.setSkin(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), p.getName()));
+		p.getInventory().addItem(SkullManager.getSkinnedHead(p.getName()));
 		p.sendMessage(prefix + "Here is your head");
 
 		return true;

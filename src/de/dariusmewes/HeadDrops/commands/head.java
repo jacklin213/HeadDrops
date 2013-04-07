@@ -6,14 +6,13 @@
 package de.dariusmewes.HeadDrops.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import de.dariusmewes.HeadDrops.HeadDrops;
+import de.dariusmewes.HeadDrops.SkullManager;
 
 public final class head implements CommandExecutor {
 
@@ -34,7 +33,7 @@ public final class head implements CommandExecutor {
 				return true;
 			}
 
-			p.getInventory().addItem(HeadDrops.setSkin(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), args[0]));
+			p.getInventory().addItem(SkullManager.getSkinnedHead(args[0]));
 			p.sendMessage(prefix + "You got one head of " + args[0]);
 
 		} else if (args.length == 2) {
@@ -48,7 +47,7 @@ public final class head implements CommandExecutor {
 			if (target == null) {
 				sender.sendMessage(prefix + args[0] + " is not online!");
 			} else {
-				target.getInventory().addItem(HeadDrops.setSkin(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), args[1]));
+				target.getInventory().addItem(SkullManager.getSkinnedHead(args[1]));
 				sender.sendMessage(prefix + target.getName() + " got one head of " + args[1]);
 			}
 
