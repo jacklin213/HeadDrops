@@ -96,8 +96,8 @@ public class EventListener implements Listener {
 				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.SPIDER));
 			else if (t == EntityType.ENDERMAN && chance("enderman"))
 				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.ENDERMAN));
-			// else if (t == EntityType.SLIME && chance("slime"))
-			// event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.SLIME));
+			else if (t == EntityType.SLIME && chance("slime"))
+				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.SLIME));
 		}
 	}
 
