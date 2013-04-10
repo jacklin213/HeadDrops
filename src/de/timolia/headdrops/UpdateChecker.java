@@ -3,7 +3,7 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops;
+package de.timolia.headdrops;
 
 import java.net.URL;
 

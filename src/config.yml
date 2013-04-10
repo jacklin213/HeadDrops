@@ -1,0 +1,14 @@
+zombiedrop: 5
+skeletondrop: 5
+creeperdrop: 5
+blazedrop: 5
+spiderdrop: 5
+endermandrop: 5
+slimedrop: 5
+playerdrop: 25
+dropBlank: false
+permissionCheckMob: false
+permissionCheckPlayer: false
+checkForUpdates: true
+# DO NOT EDIT
+currentVersion: 1.7

@@ -3,7 +3,7 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops;
+package de.timolia.headdrops;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,14 +11,13 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.dariusmewes.HeadDrops.commands.head;
-import de.dariusmewes.HeadDrops.commands.headdrops;
-import de.dariusmewes.HeadDrops.commands.headinfo;
-import de.dariusmewes.HeadDrops.commands.myhead;
+import de.timolia.headdrops.cmds.head;
+import de.timolia.headdrops.cmds.headdrops;
+import de.timolia.headdrops.cmds.headinfo;
+import de.timolia.headdrops.cmds.myhead;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
@@ -28,6 +27,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
 	public static boolean updateAvailable = false;
 
 	public void onEnable() {
+		this.saveDefaultConfig();
+
 		getCommand("head").setExecutor(new head());
 		getCommand("headdrops").setExecutor(new headdrops(this));
 		getCommand("myhead").setExecutor(new myhead());
@@ -37,24 +38,6 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 		dataFolder = getDataFolder();
 
-		// config
-		FileConfiguration conf = getConfig();
-		conf.addDefault("ironanddiamond", true);
-		conf.addDefault("axeenabled", true);
-		conf.addDefault("zombiedrop", 5);
-		conf.addDefault("skeletondrop", 5);
-		conf.addDefault("creeperdrop", 5);
-		conf.addDefault("blazedrop", 5);
-		conf.addDefault("spiderdrop", 5);
-		conf.addDefault("endermandrop", 5);
-		conf.addDefault("playerdrop", 25);
-		conf.addDefault("dropBlank", false);
-		conf.addDefault("permissionCheckMob", false);
-		conf.addDefault("permissionCheckPlayer", false);
-		conf.addDefault("checkForUpdates", true);
-		conf.options().copyDefaults(true);
-		saveConfig();
-
 		// stats and update checking
 		try {
 			m = new Metrics(this);
@@ -63,7 +46,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
 			e.printStackTrace();
 		}
 
-		if (conf.getBoolean("checkForUpdates"))
+		if (getConfig().getBoolean("checkForUpdates"))
 			UpdateChecker.start(this);
 		else
 			log("Update-Checking disabled! Change the config.yml to activate it.");

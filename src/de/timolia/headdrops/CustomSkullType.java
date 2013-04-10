@@ -3,11 +3,11 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops;
+package de.timolia.headdrops;
 
 public enum CustomSkullType {
 
-	BLAZE("_Luna00_", "Blaze Head"), SPIDER("Kelevra_V", "Spider Head"), ENDERMAN("Violit", "Enderman Head");
+	BLAZE("Blaze_Head", "Blaze Head"), SPIDER("Kelevra_V", "Spider Head"), ENDERMAN("Violit", "Enderman Head"), SLIME("_Luna00_", "Slime Head");
 
 	private String skin;
 	private String displayName;

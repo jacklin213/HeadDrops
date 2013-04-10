@@ -3,7 +3,7 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops;
+package de.timolia.headdrops;
 
 import java.util.Random;
 
@@ -25,7 +25,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.dariusmewes.HeadDrops.commands.headinfo;
+import de.timolia.headdrops.cmds.headinfo;
 
 public class EventListener implements Listener {
 
@@ -96,6 +96,8 @@ public class EventListener implements Listener {
 				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.SPIDER));
 			else if (t == EntityType.ENDERMAN && chance("enderman"))
 				event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.ENDERMAN));
+			// else if (t == EntityType.SLIME && chance("slime"))
+			// event.getDrops().add(SkullManager.getCustomSkull(CustomSkullType.SLIME));
 		}
 	}
 

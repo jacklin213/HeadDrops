@@ -3,7 +3,7 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops.commands;
+package de.timolia.headdrops.cmds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.dariusmewes.HeadDrops.HeadDrops;
+import de.timolia.headdrops.HeadDrops;
 
 public class headinfo implements CommandExecutor {
 

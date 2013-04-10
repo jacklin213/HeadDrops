@@ -3,15 +3,15 @@
  *  2013 Darius Mewes
  */
 
-package de.dariusmewes.HeadDrops.commands;
+package de.timolia.headdrops.cmds;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.dariusmewes.HeadDrops.HeadDrops;
-import de.dariusmewes.HeadDrops.SkullManager;
+import de.timolia.headdrops.HeadDrops;
+import de.timolia.headdrops.SkullManager;
 
 public final class myhead implements CommandExecutor {
 
