@@ -7,6 +7,7 @@ package de.timolia.headdrops;
 
 import java.util.Random;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.block.Skull;
@@ -49,7 +50,7 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (event.getBlock().getType() == Material.SKULL) {
+		if (event.getBlock().getType() == Material.SKULL && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
 			Skull skull = (Skull) event.getBlock().getState();
 			if (headinfo.isActive(event.getPlayer())) {
 				if (skull.getSkullType() == SkullType.PLAYER && skull.hasOwner() && !SkullManager.isSkullCustom(skull.getOwner())) {
@@ -57,10 +58,16 @@ public class EventListener implements Listener {
 					event.setCancelled(true);
 				}
 			} else {
-				if (skull.getSkullType() == SkullType.PLAYER && SkullManager.isSkullCustom(skull.getOwner())) {
-					event.setCancelled(true);
-					event.getBlock().setType(Material.AIR);
-					event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), SkullManager.getCustomSkull(CustomSkullType.forSkinName(skull.getOwner())));
+				if (skull.getSkullType() == SkullType.PLAYER) {
+					if (skull.getOwner().equalsIgnoreCase("_Luna00_")) {
+						event.setCancelled(true);
+						event.getBlock().setType(Material.AIR);
+						event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), SkullManager.getCustomSkull(CustomSkullType.SLIME));
+					} else if (SkullManager.isSkullCustom(skull.getOwner())) {
+						event.setCancelled(true);
+						event.getBlock().setType(Material.AIR);
+						event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), SkullManager.getCustomSkull(CustomSkullType.forSkinName(skull.getOwner())));
+					}
 				}
 			}
 		}

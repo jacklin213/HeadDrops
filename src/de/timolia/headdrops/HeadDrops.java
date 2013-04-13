@@ -28,6 +28,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		this.saveDefaultConfig();
+		getConfig().set("currentVersion", 1.71);
+		saveConfig();
 
 		getCommand("head").setExecutor(new head());
 		getCommand("headdrops").setExecutor(new headdrops(this));

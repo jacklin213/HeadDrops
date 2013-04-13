@@ -7,7 +7,7 @@ package de.timolia.headdrops;
 
 public enum CustomSkullType {
 
-	BLAZE("Blaze_Head", "Blaze Head"), SPIDER("Kelevra_V", "Spider Head"), ENDERMAN("Violit", "Enderman Head"), SLIME("_Luna00_", "Slime Head");
+	BLAZE("Blaze_Head", "Blaze Head"), SPIDER("Kelevra_V", "Spider Head"), ENDERMAN("Violit", "Enderman Head"), SLIME("Ex_PS3Zocker", "Slime Head");
 
 	private String skin;
 	private String displayName;
