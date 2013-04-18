@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.timolia.headdrops.cmds.head;
 import de.timolia.headdrops.cmds.headdrops;
 import de.timolia.headdrops.cmds.headinfo;
+import de.timolia.headdrops.cmds.mobhead;
 import de.timolia.headdrops.cmds.myhead;
 
 public class HeadDrops extends JavaPlugin implements Listener {
@@ -33,6 +34,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
 		getCommand("headdrops").setExecutor(new headdrops(this));
 		getCommand("myhead").setExecutor(new myhead());
 		getCommand("headinfo").setExecutor(new headinfo());
+		getCommand("mobhead").setExecutor(new mobhead());
 
 		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 

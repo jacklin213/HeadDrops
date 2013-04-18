@@ -1,5 +1,5 @@
 name: HeadDrops
-version: 1.71
+version: 1.8
 author: pizzafreak08
 main: de.timolia.headdrops.HeadDrops
 website: http://www.timolia.de/
@@ -17,3 +17,5 @@ commands:
     headinfo:
         description: Get the name of a clicked head displayed
         usage: /headinfo
+    mobhead:
+        description: Get the head from a specific mob
