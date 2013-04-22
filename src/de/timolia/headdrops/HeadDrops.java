@@ -22,54 +22,54 @@ import de.timolia.headdrops.cmds.myhead;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
-	private Metrics m;
-	public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
-	public static File dataFolder;
-	public static boolean updateAvailable = false;
+    private Metrics m;
+    public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
+    public static File dataFolder;
+    public static boolean updateAvailable = false;
 
-	public void onEnable() {
-		this.saveDefaultConfig();
+    public void onEnable() {
+        this.saveDefaultConfig();
 
-		getCommand("head").setExecutor(new head());
-		getCommand("headdrops").setExecutor(new headdrops(this));
-		getCommand("myhead").setExecutor(new myhead());
-		getCommand("headinfo").setExecutor(new headinfo());
-		getCommand("mobhead").setExecutor(new mobhead());
+        getCommand("head").setExecutor(new head());
+        getCommand("headdrops").setExecutor(new headdrops(this));
+        getCommand("myhead").setExecutor(new myhead());
+        getCommand("headinfo").setExecutor(new headinfo());
+        getCommand("mobhead").setExecutor(new mobhead());
 
-		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
-		dataFolder = getDataFolder();
+        dataFolder = getDataFolder();
 
-		// stats and update checking
-		try {
-			m = new Metrics(this);
-			m.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        // stats and update checking
+        try {
+            m = new Metrics(this);
+            m.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		if (getConfig().getBoolean("checkForUpdates"))
-			UpdateChecker.start(this);
-		else
-			log("Update-Checking disabled! Change the config.yml to activate it.");
-	}
+        if (getConfig().getBoolean("checkForUpdates"))
+            UpdateChecker.start(this);
+        else
+            log("Update-Checking disabled! Change the config.yml to activate it.");
+    }
 
-	public void onDisable() {
+    public void onDisable() {
 
-	}
+    }
 
-	public void reload() {
-		this.reloadConfig();
-		if (!getConfig().getBoolean("checkForUpdates") && UpdateChecker.task != null) {
-			UpdateChecker.task.cancel();
-			UpdateChecker.task = null;
-			log("UpdateChecker stopped");
-		} else if (getConfig().getBoolean("checkForUpdates") && UpdateChecker.task == null)
-			UpdateChecker.start(this);
-	}
+    public void reload() {
+        this.reloadConfig();
+        if (!getConfig().getBoolean("checkForUpdates") && UpdateChecker.task != null) {
+            UpdateChecker.task.cancel();
+            UpdateChecker.task = null;
+            log("UpdateChecker stopped");
+        } else if (getConfig().getBoolean("checkForUpdates") && UpdateChecker.task == null)
+            UpdateChecker.start(this);
+    }
 
-	public static void log(String tx) {
-		Logger.getLogger("Minecraft").info("[HeadDrops] " + tx);
-	}
+    public static void log(String tx) {
+        Logger.getLogger("Minecraft").info("[HeadDrops] " + tx);
+    }
 
 }

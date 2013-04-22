@@ -18,48 +18,48 @@ import de.timolia.headdrops.HeadDrops;
 
 public class headinfo implements CommandExecutor {
 
-	private static List<String> active = new ArrayList<String>();
-	private String prefix = HeadDrops.PREFIX;
+    private static List<String> active = new ArrayList<String>();
+    private String prefix = HeadDrops.PREFIX;
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.hasPermission("headdrops.headinfo")) {
-			sender.sendMessage(prefix + "You don't have permission!");
-			return true;
-		}
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!sender.hasPermission("headdrops.headinfo")) {
+            sender.sendMessage(prefix + "You don't have permission!");
+            return true;
+        }
 
-		final Player p;
-		final boolean self;
+        final Player p;
+        final boolean self;
 
-		if (args.length >= 1) {
-			p = Bukkit.getPlayer(args[0]);
-			self = false;
-			if (p == null) {
-				sender.sendMessage(prefix + "The player " + args[0] + " was not found!");
-				return true;
-			}
-		} else {
-			if (sender instanceof Player) {
-				p = (Player) sender;
-				self = true;
-			} else {
-				sender.sendMessage(prefix + "This command can only be executed from ingame");
-				return true;
-			}
-		}
+        if (args.length >= 1) {
+            p = Bukkit.getPlayer(args[0]);
+            self = false;
+            if (p == null) {
+                sender.sendMessage(prefix + "The player " + args[0] + " was not found!");
+                return true;
+            }
+        } else {
+            if (sender instanceof Player) {
+                p = (Player) sender;
+                self = true;
+            } else {
+                sender.sendMessage(prefix + "This command can only be executed from ingame");
+                return true;
+            }
+        }
 
-		if (active.contains(p.getName())) {
-			active.remove(p.getName());
-			sender.sendMessage(prefix + "You disabled headinfo for " + (self ? "yourself" : p.getName()) + ".");
-		} else {
-			active.add(p.getName());
-			sender.sendMessage(prefix + "You enabled headinfo for " + (self ? "yourself" : p.getName()) + ".");
-		}
+        if (active.contains(p.getName())) {
+            active.remove(p.getName());
+            sender.sendMessage(prefix + "You disabled headinfo for " + (self ? "yourself" : p.getName()) + ".");
+        } else {
+            active.add(p.getName());
+            sender.sendMessage(prefix + "You enabled headinfo for " + (self ? "yourself" : p.getName()) + ".");
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public static boolean isActive(Player p) {
-		return active.contains(p.getName());
-	}
+    public static boolean isActive(Player p) {
+        return active.contains(p.getName());
+    }
 
 }
