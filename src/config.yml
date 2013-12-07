@@ -1,11 +1,26 @@
 # rate in percent at which mobs drop their heads
-zombiedrop: 5
 skeletondrop: 5
-creeperdrop: 5
+witherskeletondrop: 5
+zombiedrop: 5
 blazedrop: 5
-spiderdrop: 5
+cavespiderdrop: 5
+chickendrop: 5
+cowdrop: 5
 endermandrop: 5
+ghastdrop: 5
+irongolemdrop: 5
+magmacubedrop: 5
+mushroomcowdrop: 5
+ocelotdrop: 5
+pigdrop: 5
+pigzombiedrop: 5
+sheepdrop: 5
 slimedrop: 5
+spiderdrop: 5
+squiddrop: 5
+villagerdrop: 5
+witherdrop: 5
+creeperdrop: 5
 # rate in percent at which players drop their heads
 playerdrop: 25
 # true or false whether players have to use an iron or diamond tool (sword/axe) instead of cheaper materials to get the head
