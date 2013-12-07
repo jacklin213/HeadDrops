@@ -61,13 +61,13 @@ public class UpdateChecker {
 					}
 
 					if (version > currentVersion) {
-						String additionalMsg = null;
+						String additionalMsg = "";
 						if (args.length > 1)
 							for (int i = 1; i < args.length; i++)
 								additionalMsg += args[i] + " ";
 
 						HeadDrops.log("A new version is available: " + version);
-						if (additionalMsg != null)
+						if (!additionalMsg.equalsIgnoreCase(""))
 							HeadDrops.log("Additional information: " + additionalMsg);
 
 						plugin.updateAvailable = true;
