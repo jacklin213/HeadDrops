@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 public class UpdateChecker {
@@ -70,8 +71,16 @@ public class UpdateChecker {
 						if (!additionalMsg.equalsIgnoreCase(""))
 							HeadDrops.log("Additional information: " + additionalMsg);
 
+						for (Player p : Bukkit.getOnlinePlayers()) {
+							if (p.isOp() || p.hasPermission("headdrops.update")) {
+								p.sendMessage(HeadDrops.PREFIX + "A new version is available: " + version);
+								p.sendMessage(HeadDrops.PREFIX + "Get it at http://dev.bukkit.org/server-mods/head-drops");
+							}
+						}
+
 						plugin.updateAvailable = true;
-					}
+					} else
+						HeadDrops.log("You have the newest version installed!");
 				}
 
 				br.close();
@@ -80,5 +89,4 @@ public class UpdateChecker {
 			}
 		}
 	}
-
 }
