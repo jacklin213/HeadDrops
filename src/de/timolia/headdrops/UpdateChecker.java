@@ -16,13 +16,11 @@ import org.bukkit.scheduler.BukkitTask;
 public class UpdateChecker {
 
 	private HeadDrops plugin;
-	private String currentVersion;
 	private String readurl = "https://raw.github.com/EX0/HeadDrops/master/version.txt";
 	private BukkitTask task;
 
 	public UpdateChecker(HeadDrops plugin) {
 		this.plugin = plugin;
-		currentVersion = plugin.getDescription().getVersion();
 	}
 
 	public void start() {
@@ -31,7 +29,7 @@ public class UpdateChecker {
 				public void run() {
 					check();
 				}
-			}, 2000, 864000);
+			}, 200, 864000);
 		HeadDrops.log("The Update-Checker has been started");
 	}
 
@@ -49,17 +47,33 @@ public class UpdateChecker {
 				URL url = new URL(readurl);
 				BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
 				String line;
+
 				if ((line = br.readLine()) != null) {
 					double version = 0;
+					double currentVersion = 0;
+					String[] args = line.split(" ");
 					try {
-						version = Double.parseDouble(line.split(" ")[0]);
+						version = Double.parseDouble(args[0]);
+						currentVersion = Double.parseDouble(plugin.getDescription().getVersion());
 					} catch (Exception e) {
 						HeadDrops.log("Update-Checking has failed...", true);
 						e.printStackTrace();
 					}
 
-					HeadDrops.log("Found version: " + version);
+					if (version > currentVersion) {
+						String additionalMsg = null;
+						if (args.length > 1)
+							for (int i = 1; i < args.length; i++)
+								additionalMsg += args[i] + " ";
+
+						HeadDrops.log("A new version is available: " + version);
+						if (additionalMsg != null)
+							HeadDrops.log("Additional information: " + additionalMsg);
+
+						plugin.updateAvailable = true;
+					}
 				}
+
 				br.close();
 			} catch (IOException e) {
 				HeadDrops.log("The UpdateChecker URL is invalid! Please let me know!", true);

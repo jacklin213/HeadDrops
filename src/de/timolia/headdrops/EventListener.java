@@ -65,7 +65,7 @@ public class EventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if (instance.updateAvailable && (event.getPlayer().isOp() || event.getPlayer().hasPermission("headdrops.update"))) {
+		if (instance.updateAvailable && instance.getConfig().getBoolean("update-checker") && (event.getPlayer().isOp() || event.getPlayer().hasPermission("headdrops.update"))) {
 			event.getPlayer().sendMessage(HeadDrops.PREFIX + "A new version is available!");
 			event.getPlayer().sendMessage(HeadDrops.PREFIX + "Get it at http://dev.bukkit.org/server-mods/head-drops");
 		}
