@@ -19,3 +19,4 @@ commands:
         usage: /headinfo
     mobhead:
         description: Get the head from a specific mob
+        usage: /mobhead <mob>

@@ -7,18 +7,20 @@ package de.timolia.headdrops;
 
 public enum CustomSkullType {
 
+	// @formatter:off
+	
     BLAZE("MHF_Blaze", "Blaze Head"),
-    CAVE_SPIDER("MHF_CaveSpider", "Cave Spider Head"),
+    CAVE_SPIDER("MHF_CaveSpider", "Cave Spider Head", "cavespider"),
     CHICKEN("MHF_Chicken", "Chicken Head"),
     COW("MHF_Cow", "Cow Head"),
     ENDERMAN("MHF_Enderman", "Enderman Head"),
     GHAST("MHF_Ghast", "Ghast Head"),
-    IRON_GOLEM("MHF_Golem", "Iron Golem Head"),
-    MAGMA_CUBE("MHF_LavaSlime", "Magma Cube Head"),
-    MUSHROOM_COW("MHF_MushroomCow", "Mushroom Cow Head"),
-    OCELOT("MHF_Ocelot", "Ocelot Head"),
+    IRON_GOLEM("MHF_Golem", "Iron Golem Head", "irongolem", "golem"),
+    MAGMA_CUBE("MHF_LavaSlime", "Magma Cube Head", "magmacube", "lava_slime", "lavaslime"),
+    MUSHROOM_COW("MHF_MushroomCow", "Mushroom Cow Head", "mushroomcow", "mooshrom"),
+    OCELOT("MHF_Ocelot", "Ocelot Head", "cat"),
     PIG("MHF_Pig", "Pig Head"),
-    PIG_ZOMBIE("MHF_PigZombie", "Pig Zombie Head"),
+    PIG_ZOMBIE("MHF_PigZombie", "Pig Zombie Head", "pigzombie", "pigman", "zombie_pigman", "zombiepigman"),
     SHEEP("MHF_Sheep", "Sheep Head"),
     SLIME("MHF_Slime", "Slime Head"),
     SPIDER("MHF_Spider", "Spider Head"),
@@ -26,28 +28,45 @@ public enum CustomSkullType {
     VILLAGER("MHF_Villager", "Villager Head"),
     WITHER("MHF_Wither", "Wither Head");
 
-    private String skin;
-    private String displayName;
+    // @formatter:on
 
-    private CustomSkullType(String skin, String displayName) {
-        this.skin = skin;
-        this.displayName = displayName;
-    }
+	private String skin;
+	private String displayName;
+	private String[] otherNames;
 
-    public String getSkinName() {
-        return this.skin;
-    }
+	private CustomSkullType(String skin, String displayName, String... otherNames) {
+		this.skin = skin;
+		this.displayName = displayName;
+		this.otherNames = otherNames;
+	}
 
-    public String getDisplayName() {
-        return this.displayName;
-    }
+	public String getSkinName() {
+		return this.skin;
+	}
 
-    public static CustomSkullType forSkinName(String skinName) {
-        for (CustomSkullType t : values())
-            if (t.getSkinName().equalsIgnoreCase(skinName))
-                return t;
+	public String getDisplayName() {
+		return this.displayName;
+	}
 
-        return null;
-    }
+	public static CustomSkullType forSkullOwnerString(String skullOwner) {
+		for (CustomSkullType t : values())
+			if (t.getSkinName().equalsIgnoreCase(skullOwner))
+				return t;
+
+		return null;
+	}
+
+	public static CustomSkullType forGeneralEntityName(String entityName) {
+		for (CustomSkullType t : values()) {
+			if (entityName.equalsIgnoreCase(t.toString()))
+				return t;
+			else
+				for (String otherName : t.otherNames)
+					if (otherName.equalsIgnoreCase(entityName))
+						return t;
+		}
+
+		return null;
+	}
 
 }

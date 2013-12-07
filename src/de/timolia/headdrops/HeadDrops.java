@@ -22,54 +22,127 @@ import de.timolia.headdrops.cmds.myhead;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
-    private Metrics m;
-    public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
-    public static File dataFolder;
-    public static boolean updateAvailable = false;
+	private Metrics m;
+	public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
+	public static File dataFolder;
+	private UpdateChecker updater;
 
-    public void onEnable() {
-        this.saveDefaultConfig();
+	boolean updateAvailable = false;
 
-        getCommand("head").setExecutor(new head());
-        getCommand("headdrops").setExecutor(new headdrops(this));
-        getCommand("myhead").setExecutor(new myhead());
-        getCommand("headinfo").setExecutor(new headinfo());
-        getCommand("mobhead").setExecutor(new mobhead());
+	public void onEnable() {
+		initConfig();
 
-        Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
+		getCommand("head").setExecutor(new head());
+		getCommand("headdrops").setExecutor(new headdrops(this));
+		getCommand("myhead").setExecutor(new myhead());
+		getCommand("headinfo").setExecutor(new headinfo());
+		getCommand("mobhead").setExecutor(new mobhead());
 
-        dataFolder = getDataFolder();
+		Bukkit.getPluginManager().registerEvents(new EventListener(this), this);
 
-        // stats and update checking
-        try {
-            m = new Metrics(this);
-            m.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		dataFolder = getDataFolder();
 
-        if (getConfig().getBoolean("checkForUpdates"))
-            UpdateChecker.start(this);
-        else
-            log("Update-Checking disabled! Change the config.yml to activate it.");
-    }
+		// stats and update checking
+		try {
+			m = new Metrics(this);
+			m.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    public void onDisable() {
+		updater = new UpdateChecker(this);
+		updater.start();
+	}
 
-    }
+	public void onDisable() {
+		updater.stop();
+	}
 
-    public void reload() {
-        this.reloadConfig();
-        if (!getConfig().getBoolean("checkForUpdates") && UpdateChecker.task != null) {
-            UpdateChecker.task.cancel();
-            UpdateChecker.task = null;
-            log("UpdateChecker stopped");
-        } else if (getConfig().getBoolean("checkForUpdates") && UpdateChecker.task == null)
-            UpdateChecker.start(this);
-    }
+	public void reload() {
+		updater.stop();
+		this.reloadConfig();
+		(updater = new UpdateChecker(this)).start();
+	}
 
-    public static void log(String tx) {
-        Logger.getLogger("Minecraft").info("[HeadDrops] " + tx);
-    }
+	public static void log(String text) {
+		HeadDrops.log(text, false);
+	}
+
+	public static void log(String text, boolean error) {
+		if (error)
+			Logger.getLogger("Minecraft").severe("[HeadDrops] " + text);
+		else
+			Logger.getLogger("Minecraft").info("[HeadDrops] " + text);
+	}
+
+	private void initConfig() {
+		// @formatter:off
+		
+		String[] parameter = {
+				"dropBlank",
+				"permissionCheckMob",
+				"permissionCheckPlayer",
+				"update-checker",
+				"chance.blaze", 
+				"chance.cave_spider", 
+				"chance.chicken", 
+				"chance.cow", 
+				"chance.creeper", 
+				"chance.enderman", 
+				"chance.ghast", 
+				"chance.iron_golem", 
+				"chance.magma_cube", 
+				"chance.mushroom_cow", 
+				"chance.ocelot", 
+				"chance.pig", 
+				"chance.pig_zombie", 
+				"chance.sheep", 
+				"chance.skeleton", 
+				"chance.slime", 
+				"chance.spider", 
+				"chance.squid", 
+				"chance.villager", 
+				"chance.wither", 
+				"chance.player", 
+				"chance.zombie"
+		};
+							
+		Object[] defaultValue = {
+				false, 
+				false, 
+				false, 
+				true, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5, 
+				5
+		};
+		
+		// @formatter:on
+
+		for (int i = 0; i < parameter.length; i++) {
+			getConfig().addDefault(parameter[i], defaultValue[i]);
+		}
+		getConfig().options().copyDefaults(true);
+		saveConfig();
+	}
 
 }
