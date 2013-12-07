@@ -31,7 +31,7 @@ public class UpdateChecker {
 					check();
 				}
 			}, 200, 864000);
-		HeadDrops.log("The Update-Checker has been started");
+		HeadDrops.log("The Update-Checker has been started...");
 	}
 
 	public void stop() {
