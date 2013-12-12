@@ -5,6 +5,7 @@
 .idea
 out
 META-INF
+.DS_Store
 
 # Eclipse Dateien
 bin

@@ -17,8 +17,10 @@ import java.util.logging.Logger;
 
 public class HeadDrops extends JavaPlugin implements Listener {
 
-    private Metrics m;
     public static final String PREFIX = ChatColor.GOLD + "(HeadDrops) " + ChatColor.RESET;
+    private static final int CURSE_PROJECT_ID = 47089;
+
+    private Metrics m;
     public static File dataFolder;
     private Updater updater;
 
@@ -45,15 +47,15 @@ public class HeadDrops extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
 
-        updater = new Updater(this, 47089, this.getFile(), Updater.UpdateType.DEFAULT, true);
+        if (getConfig().getBoolean("updater"))
+            updater = new Updater(this, CURSE_PROJECT_ID, this.getFile(), getConfig().getBoolean("auto-download-update"));
     }
 
     public void onDisable() {
-
     }
 
     public void reload() {
-
+        this.reloadConfig();
     }
 
     public static void log(String text) {
@@ -74,7 +76,8 @@ public class HeadDrops extends JavaPlugin implements Listener {
                 "dropBlank",
                 "permissionCheckMob",
                 "permissionCheckPlayer",
-                "update-checker",
+                "updater",
+                "auto-download-update",
                 "chance.blaze",
                 "chance.cave_spider",
                 "chance.chicken",
@@ -103,6 +106,7 @@ public class HeadDrops extends JavaPlugin implements Listener {
                 false,
                 false,
                 false,
+                true,
                 true,
                 5,
                 5,
