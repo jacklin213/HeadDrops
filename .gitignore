@@ -1,6 +1,15 @@
+*.class
+*.war
+*.ear
+*.iml
+.idea
+out
+META-INF
+
+# Eclipse Dateien
 bin
-.metadata
-.DS_Store
+*.jardesc
 .classpath
-autosave.jardesc
-.gitignore
+.project
+.settings
+org.eclipse.jdt.core.prefs
